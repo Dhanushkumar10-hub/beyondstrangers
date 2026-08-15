@@ -41,7 +41,7 @@ import {
 } from '../data/mockData';
 import { Hero } from '../components/Hero';
 import { QuickFacts } from '../components/QuickFacts';
-import { MapSection } from '../components/MapSection';
+import { ExperienceHighlights } from '../components/ExperienceHighlights';
 import { TripStickyMobileCTA } from '../components/TripStickyMobileCTA';
 
 interface HomeViewProps {
@@ -427,13 +427,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
       </section>
 
       {/* ========================================================================= */}
-      {/* SECTION 6: THE JOURNEY — REGIONAL ON-DEMAND MAP & WAYPOINTS               */}
+      {/* SECTION 6: WHAT AWAITS YOU — EXPERIENCE HIGHLIGHTS                        */}
       {/* ========================================================================= */}
-      <MapSection 
-        title="THE JOURNEY"
-        regionDescription={`${featuredTrip.title} region — forests, boating, waterfalls and viewpoints.`}
-        publicMapAllowed={true}
-        onContactClick={() => {
+      <ExperienceHighlights 
+        heading="WHAT AWAITS YOU"
+        description="Real, human-led experiences — short days packed with nature, discoveries and new people."
+        onViewFullTrip={() => {
+          onSelectTrip(featuredTrip);
+        }}
+        onAskTrip={() => {
           setActiveTab('contact');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
