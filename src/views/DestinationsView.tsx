@@ -1,91 +1,91 @@
 import React from 'react';
-import { ArrowRight, MapPin } from 'lucide-react';
-import { DEMO_DESTINATIONS, DEMO_TRIPS } from '../data/mockData';
-import { Trip, Destination } from '../types';
+import { Destination, Trip } from '../types';
+import { MapPin, ArrowRight, Mountain, Sparkles } from 'lucide-react';
+import { TripHighlightBadge } from '../components/TripHighlightBadge';
 
 interface DestinationsViewProps {
+  destinations: Destination[];
+  onSelectDestination: (dest: Destination) => void;
+  trips: Trip[];
   onSelectTrip: (trip: Trip) => void;
-  destinations?: Destination[];
-  trips?: Trip[];
 }
 
-export const DestinationsView: React.FC<DestinationsViewProps> = ({ 
-  onSelectTrip,
-  destinations = DEMO_DESTINATIONS,
-  trips = DEMO_TRIPS
+export const DestinationsView: React.FC<DestinationsViewProps> = ({
+  destinations,
+  onSelectDestination,
+  trips,
+  onSelectTrip
 }) => {
   return (
-    <div className="bg-white text-[#0A0A0A] pt-24 pb-28 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 bg-[#F7F5EF] text-[#202622]">
+      <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header */}
-        <div className="space-y-3 max-w-3xl">
-          <div className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-[#666666] font-medium">
-            OUR GEOGRAPHIES
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D8C3A5] border border-[#A8BFA3]/50 text-[#202622] text-xs font-mono font-bold">
+            <Mountain className="w-3.5 h-3.5 text-[#183A2A]" />
+            <span>WESTERN GHATS & HILLS</span>
           </div>
-          <h1 className="text-[clamp(36px,4.5vw,58px)] font-bold font-serif-editorial text-[#0A0A0A] tracking-tight leading-tight">
-            Destinations Across India
+
+          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#183A2A]">
+            Destinations We Explore
           </h1>
-          <p className="text-base sm:text-lg text-[#555555] font-light leading-relaxed">
-            From the tea-clad ridge lines of Kerala to the monsoon waterfalls of the East and heritage ruins of the Deccan Plateau.
+          <p className="text-xs sm:text-sm text-[#202622]/80 font-medium">
+            Hidden trails, high peaks, and misty plantation estates across South India.
           </p>
         </div>
 
-        {/* Minimal Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8">
+        {/* Destinations Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {destinations.map((dest) => {
-            const matchingTrip = trips.find(t => t.destination.toLowerCase().includes(dest.name.toLowerCase()));
+            const destTrips = trips.filter(t => t.destination.toLowerCase().includes(dest.name.toLowerCase()));
 
             return (
               <div
                 key={dest.id}
-                onClick={() => matchingTrip && onSelectTrip(matchingTrip)}
-                className={`group ${matchingTrip ? 'cursor-pointer' : 'cursor-default'} bg-white border border-[#E5E5E5] hover:border-[#0A0A0A] transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xs`}
+                onClick={() => onSelectDestination(dest)}
+                className="group cursor-pointer rounded-2xl bg-[#F7F5EF] border border-[#A8BFA3] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#F7F7F5]">
+                {/* Media Image Frame */}
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#D8C3A5]">
                   <img
-                    src={dest.image}
-                    alt={dest.name}
+                    src={dest.heroImage}
+                    alt={`${dest.name} landscape in Tamil Nadu`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#202622]/60 via-transparent to-transparent" />
 
-                  <div className="absolute top-4 left-4 bg-white/95 text-[#0A0A0A] px-2.5 py-1 text-xs font-mono uppercase tracking-widest border border-[#E5E5E5] font-semibold">
-                    {dest.stateCountry || dest.region}
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-[#183A2A] text-[#F7F5EF] text-[10px] font-mono font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
+                      {dest.state}
+                    </span>
                   </div>
 
-                  {dest.activeTripsCount > 0 && (
-                    <div className="absolute bottom-4 left-4 bg-white/95 text-[#333333] text-xs font-medium tracking-wider px-2.5 py-1 border border-[#E5E5E5]">
-                      {dest.activeTripsCount} PLANNED CHAPTERS
+                  <div className="absolute bottom-3 left-3 text-white">
+                    <div className="text-xl font-serif font-bold text-[#F7F5EF] leading-none">
+                      {dest.name}
                     </div>
-                  )}
+                  </div>
                 </div>
 
-                <div className="p-6 sm:p-7 space-y-4 flex-1 flex flex-col justify-between bg-white">
+                {/* Content Box */}
+                <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-2">
-                    <div className="text-xs font-mono text-[#666666] uppercase tracking-wider font-medium">
-                      {dest.subtitle}
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-bold font-serif-editorial text-[#0A0A0A]">
-                      {dest.name}
-                    </h3>
-                    <p className="text-sm text-[#555555] font-light leading-relaxed line-clamp-2">
-                      {dest.shortDescription}
+                    <p className="text-xs text-[#202622]/80 font-medium line-clamp-2">
+                      {dest.tagline}
                     </p>
+
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {dest.highlights.slice(0, 3).map((hl, i) => (
+                        <TripHighlightBadge key={i} size="sm" highlight={hl} />
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="pt-4 border-t border-[#F0F0EE] flex items-center justify-between">
-                    <span className="text-xs text-[#666666] font-mono">
-                      Elevation: {dest.altitude || 'Variable'}
-                    </span>
-                    {matchingTrip ? (
-                      <span className="text-xs sm:text-sm font-bold text-[#0A0A0A] tracking-wider uppercase flex items-center gap-1.5 group-hover:translate-x-1 transition-transform">
-                        <span>EXPLORE CHAPTER</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    ) : (
-                      <span className="text-xs text-[#888888] uppercase font-mono font-medium">CURATING</span>
-                    )}
+                  <div className="pt-3 border-t border-[#A8BFA3]/40 flex items-center justify-between text-xs font-mono font-bold text-[#183A2A] group-hover:text-[#2F6B45]">
+                    <span>{destTrips.length} Active {destTrips.length === 1 ? 'Chapter' : 'Chapters'}</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
               </div>

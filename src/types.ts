@@ -13,7 +13,8 @@ export type TripCategory =
   | 'Food' 
   | 'Nature' 
   | 'Social' 
-  | 'Slow Travel';
+  | 'Slow Travel'
+  | 'Hill Station';
 
 export type TripDifficulty = 'Easy' | 'Moderate' | 'Challenging';
 
@@ -80,7 +81,7 @@ export interface Trip {
   title: string;
   chapterTitle: string; // e.g. "The First Chapter", "Into the Wild"
   destination: string;
-  region: 'South India' | 'North India & Himalayas' | 'North East' | 'West India' | 'Central India';
+  region: 'Tamil Nadu' | 'South India' | 'North India & Himalayas' | 'North East' | 'West India' | 'Central India';
   durationDays: number;
   durationNights: number;
   price: number;
@@ -225,19 +226,24 @@ export type MediaSlot =
 
 export interface VerifiedLocation {
   id: string;
-  name: string; // e.g. "Gavi Eco-Sanctuary & Rainforest"
-  districtRegion: string; // e.g. "Pathanamthitta / Western Ghats, Kerala"
-  category: 'FOREST' | 'BOATING' | 'WATERFALL' | 'VIEWPOINT' | 'CULTURAL' | 'STAY' | 'MEETING_POINT' | 'NATURE';
-  lat: number;
-  lng: number;
-  googleMapsUrl: string;
+  name: string;
+  districtRegion: string;
+  category?: 'FOREST' | 'BOATING' | 'WATERFALL' | 'VIEWPOINT' | 'CULTURAL' | 'STAY' | 'MEETING_POINT' | 'NATURE' | string;
+  lat?: number;
+  lng?: number;
+  latitude?: number;
+  longitude?: number;
+  googleMapsUrl?: string;
   verificationStatus: 'LOCATION_VERIFIED' | 'PENDING_RECONNAISSANCE';
   verifiedBy?: string;
   verificationDate?: string;
-  description: string;
-  activityTags: string[]; // e.g. ['FOREST', 'BOATING', 'WILDLIFE', 'NATURE']
-  verifiedLandmarkNotes: string;
+  lastVerifiedDate?: string;
+  description?: string;
+  notes?: string;
+  activityTags?: string[];
+  verifiedLandmarkNotes?: string;
   elevation?: string;
+  recommendedSeason?: string;
   associatedTripId?: string;
   mediaReferences?: string[];
 }
@@ -296,5 +302,6 @@ export type ActiveTab =
   | 'privacy'
   | 'terms'
   | 'cancellation'
+  | 'admin'
   | 'admin-login'
   | 'admin-dashboard';

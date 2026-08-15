@@ -79,7 +79,7 @@ export const CommunityView: React.FC<CommunityViewProps> = ({ posts, currentUser
       destination: destinationTag,
       createdAt: 'Just now',
       content: postContent,
-      images: ['https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=800&q=80'],
+      images: ['assets/images/destinations/kodaikanal.jpg'],
       likesCount: 1,
       commentsCount: 0,
       userLiked: true,

@@ -167,7 +167,7 @@ export const DesignSystemDemoView: React.FC = () => {
               title="Misty Rainforest Trekking"
               category="EXPEDITION"
               description="Guided silent trekking routes through dense shola forest canopies in Gavi."
-              imageUrl="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+              imageUrl="assets/images/experiences/forest_trails.jpg"
               badge="VERIFIED TRAIL"
               accentVariant="accent-1"
               onClick={() => {}}
@@ -179,7 +179,7 @@ export const DesignSystemDemoView: React.FC = () => {
               title="Reservoir Rowboat Drift"
               category="WATERWAY"
               description="Calm morning rowboat drift across pristine Gavi waters amidst misty peaks."
-              imageUrl="https://images.unsplash.com/photo-1432821596592-e2c18b78144f?auto=format&fit=crop&w=800&q=80"
+              imageUrl="assets/images/experiences/reservoir_boating.jpg"
               badge="KFDC PERMIT"
               accentVariant="accent-2"
               onClick={() => {}}
@@ -191,7 +191,7 @@ export const DesignSystemDemoView: React.FC = () => {
               title="Campfire Story Circles"
               category="COMMUNITY"
               description="Shared evening dinners and storytelling beneath star-filled Western Ghats skies."
-              imageUrl="https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=800&q=80"
+              imageUrl="assets/images/experiences/evening_campfire.jpg"
               badge="SOLO EXCLUSIVE"
               accentVariant="accent-3"
               onClick={() => {}}

@@ -1,172 +1,145 @@
 import React, { useState } from 'react';
-import { X, Check, ArrowRight } from 'lucide-react';
-import { TribePersonality, TravelerProfile } from '../types';
+import { X, Check, Sparkles, Shield, Heart } from 'lucide-react';
+import { TribePersonality } from '../types';
 
 interface JoinSocietyModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onJoinSuccess: (profile: TravelerProfile) => void;
+  onSuccess: (memberData: any) => void;
 }
 
-export const JoinSocietyModal: React.FC<JoinSocietyModalProps> = ({ isOpen, onClose, onJoinSuccess }) => {
-  const [step, setStep] = useState<'form' | 'pass'>('form');
+export const JoinSocietyModal: React.FC<JoinSocietyModalProps> = ({
+  isOpen,
+  onClose,
+  onSuccess
+}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
-  const [instagram, setInstagram] = useState('');
-  const [personality, setPersonality] = useState<TribePersonality>('THE SOCIAL ONE');
-  const [createdProfile, setCreatedProfile] = useState<TravelerProfile | null>(null);
+  const [personality, setPersonality] = useState<TribePersonality>('THE ADVENTURER');
+  const [submitted, setSubmitted] = useState(false);
 
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email) return;
-
-    const newProfile: TravelerProfile = {
-      id: 'soc-' + Date.now(),
-      name,
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-      city: city || 'Mumbai',
-      occupation: 'Member of The Society',
-      bio: `Joined The Stranger Society as ${personality}.`,
-      tribePersonality: personality,
-      interests: ['Wilderness', 'Photography', 'Campfire Acoustic'],
-      travelStyle: ['Solo Explorer', 'Slow Travel'],
-      journeysJoinedCount: 0,
-      badges: ['Society Pioneer', 'Verified Member'],
-      isDemo: true,
-      instagramHandle: instagram ? (instagram.startsWith('@') ? instagram : '@' + instagram) : '@beyondstrangers.in',
-      favoriteQuote: 'Arrive as strangers. Leave with stories.',
-      verifiedTraits: ['Identity Verified', 'Digital Pass Issued']
-    };
-
-    setCreatedProfile(newProfile);
-    onJoinSuccess(newProfile);
-    setStep('pass');
+    setSubmitted(true);
+    onSuccess({ name, email, city, personality });
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="relative w-full max-w-lg bg-white border border-[#0A0A0A] p-6 sm:p-10 shadow-2xl space-y-6 text-[#0A0A0A]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#183A2A]/80 backdrop-blur-sm overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-[#F7F5EF] border border-[#A8BFA3] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 my-8 text-[#202622]">
         
-        {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-[#777777] hover:text-[#0A0A0A] transition-colors p-1"
+          className="absolute top-6 right-6 text-[#202622]/60 hover:text-[#202622] transition-colors p-1"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {step === 'form' ? (
-          <div className="space-y-8">
-            <div className="space-y-2 border-b border-[#E5E5E5] pb-5">
-              <div className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-[#666666] font-medium">
-                THE STRANGER SOCIETY
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold font-serif-editorial text-[#0A0A0A]">
-                Apply for Member Pass
+        {!submitted ? (
+          <div className="space-y-6">
+            <div className="space-y-2 border-b border-[#A8BFA3]/40 pb-4">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#D8C3A5] text-[#202622] text-[10px] font-mono font-bold uppercase">
+                <Sparkles className="w-3 h-3 text-[#183A2A]" />
+                INVITATION
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#183A2A]">
+                Join The Society
               </h2>
-              <p className="text-base text-[#555555]">
-                Unlock access to unannounced small-group expeditions and alumni campfire weekends.
+              <p className="text-xs text-[#202622]/80 leading-relaxed">
+                Connect with verified solo travelers across South India. Get early access to upcoming weekend batches.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6 text-sm sm:text-base">
+            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div>
-                <label className="text-[#333333] font-semibold block mb-2">Your Full Name *</label>
+                <label className="text-[#202622] font-mono font-semibold block mb-1">Your Full Name *</label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Ananya Sharma"
+                  placeholder="Deepika Rao"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-[#F7F7F5] border border-[#E5E5E5] px-4 py-3 text-base text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A]"
+                  className="w-full bg-white border border-[#A8BFA3] rounded-xl px-3.5 py-2.5 text-xs text-[#202622] focus:border-[#183A2A] outline-none"
                 />
               </div>
 
-              <div>
-                <label className="text-[#333333] font-semibold block mb-2">Email Address *</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="e.g. ananya@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-[#F7F7F5] border border-[#E5E5E5] px-4 py-3 text-base text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A]"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[#333333] font-semibold block mb-2">City *</label>
+                  <label className="text-[#202622] font-mono font-semibold block mb-1">Email *</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="deepika@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-white border border-[#A8BFA3] rounded-xl px-3.5 py-2.5 text-xs text-[#202622] focus:border-[#183A2A] outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[#202622] font-mono font-semibold block mb-1">Home City *</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Bengaluru"
+                    placeholder="Chennai / Bengaluru"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full bg-[#F7F7F5] border border-[#E5E5E5] px-4 py-3 text-base text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A]"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-[#333333] font-semibold block mb-2">Instagram (Optional)</label>
-                  <input
-                    type="text"
-                    placeholder="@yourhandle"
-                    value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)}
-                    className="w-full bg-[#F7F7F5] border border-[#E5E5E5] px-4 py-3 text-base text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A]"
+                    className="w-full bg-white border border-[#A8BFA3] rounded-xl px-3.5 py-2.5 text-xs text-[#202622] focus:border-[#183A2A] outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-[#333333] font-semibold block mb-2">Travel Persona</label>
+                <label className="text-[#202622] font-mono font-semibold block mb-1">Your Travel Energy</label>
                 <select
                   value={personality}
                   onChange={(e) => setPersonality(e.target.value as TribePersonality)}
-                  className="w-full bg-[#F7F7F5] border border-[#E5E5E5] px-4 py-3 text-base text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A]"
+                  className="w-full bg-white border border-[#A8BFA3] rounded-xl px-3 py-2.5 text-xs text-[#202622] focus:border-[#183A2A] outline-none"
                 >
-                  <option value="THE SOCIAL ONE">THE SOCIAL ONE</option>
-                  <option value="THE ADVENTURER">THE ADVENTURER</option>
-                  <option value="THE EXPLORER">THE EXPLORER</option>
-                  <option value="THE SLOW TRAVELLER">THE SLOW TRAVELLER</option>
-                  <option value="THE STORYTELLER">THE STORYTELLER</option>
+                  <option value="THE ADVENTURER">The Adventurer (Trails, viewpoints & hikes)</option>
+                  <option value="THE CHILL SEEKER">The Chill Seeker (Campfire, music & slow tea)</option>
+                  <option value="THE PHOTOGRAPHER">The Storyteller (Visual moments & perspectives)</option>
+                  <option value="THE FOODIE">The Food Explorer (Local Tamil cuisine & coffee)</option>
                 </select>
               </div>
 
-              <div className="pt-3">
+              <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-4 bg-[#0A0A0A] text-white font-bold text-base uppercase tracking-widest hover:bg-[#262626] transition-colors shadow-sm"
+                  className="btn-primary text-xs py-3 w-full"
                 >
-                  GENERATE MEMBER PASS
+                  SUBMIT INVITATION REQUEST
                 </button>
               </div>
             </form>
           </div>
         ) : (
-          <div className="text-center py-8 space-y-8">
-            <div className="p-8 bg-[#F7F7F5] border border-[#E5E5E5] space-y-4 text-left">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase text-[#666666] font-semibold">THE STRANGER SOCIETY</span>
-                <span className="text-xs font-bold text-[#0A0A0A] uppercase tracking-wider">VERIFIED PASS</span>
-              </div>
-              <div className="pt-2 space-y-1">
-                <h3 className="text-3xl font-bold font-serif-editorial text-[#0A0A0A]">{name}</h3>
-                <div className="text-sm sm:text-base text-[#555555] font-mono">{personality} • {city}</div>
-              </div>
+          <div className="text-center py-6 space-y-4">
+            <div className="w-12 h-12 bg-[#2F6B45]/20 text-[#2F6B45] rounded-full flex items-center justify-center mx-auto border border-[#2F6B45]/30">
+              <Check className="w-6 h-6" />
             </div>
 
-            <button
-              onClick={onClose}
-              className="px-10 py-4 bg-[#0A0A0A] text-white text-base font-bold uppercase tracking-widest hover:bg-[#262626] transition-colors"
-            >
-              CLOSE & EXPLORE
-            </button>
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold font-serif text-[#183A2A]">
+                Request Confirmed
+              </h2>
+              <p className="text-xs text-[#202622]/80 max-w-sm mx-auto leading-relaxed">
+                Thank you for applying to join The Stranger Society. We will review your profile and send chapter invitations to your email.
+              </p>
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={onClose}
+                className="btn-primary text-xs py-2.5 px-6"
+              >
+                CLOSE
+              </button>
+            </div>
           </div>
         )}
 

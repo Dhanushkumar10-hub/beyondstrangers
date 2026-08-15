@@ -19,26 +19,6 @@ export interface ResponsiveImageProps {
  */
 export function generateCdnSrcSet(baseUrl: string, widths: number[] = [480, 768, 1024, 1600]): string {
   if (!baseUrl) return '';
-  if (baseUrl.includes('unsplash.com')) {
-    return widths
-      .map(w => {
-        const clean = baseUrl.split('&w=')[0].split('?w=')[0];
-        const connector = clean.includes('?') ? '&' : '?';
-        return `${clean}${connector}w=${w}&auto=format&fit=crop&q=80 ${w}w`;
-      })
-      .join(', ');
-  }
-  if (baseUrl.includes('res.cloudinary.com')) {
-    return widths
-      .map(w => {
-        const parts = baseUrl.split('/upload/');
-        if (parts.length === 2) {
-          return `${parts[0]}/upload/w_${w},f_auto,q_auto/${parts[1]} ${w}w`;
-        }
-        return `${baseUrl} ${w}w`;
-      })
-      .join(', ');
-  }
   return widths.map(w => `${baseUrl} ${w}w`).join(', ');
 }
 

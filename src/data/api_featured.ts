@@ -117,39 +117,39 @@ export async function getFeaturedTripData(supabaseClient?: any): Promise<Feature
     success: true,
     fallbackUsed: true,
     data: {
-      id: 'trip-gavi-thekkady',
-      slug: 'gavi-thekkady-monsoon',
-      title: 'GAVI / THEKKADY',
-      chapterTitle: 'CHAPTER 04 • KERALA MONSOON',
-      destination: 'Gavi & Periyar, Western Ghats, Kerala',
-      dates: '21 — 23 AUGUST',
+      id: 'trip-kodaikanal',
+      slug: 'kodaikanal-mist-escape',
+      title: 'KODAIKANAL ESCAPE',
+      chapterTitle: 'CHAPTER 01 • TAMIL NADU',
+      destination: 'Kodaikanal, Tamil Nadu',
+      dates: '21 — 22 AUGUST',
       startDate: '2026-08-21',
-      endDate: '2026-08-23',
-      duration: '2 NIGHTS / 3 DAYS',
-      price: '₹9,999 / PERSON',
-      priceCents: 999900,
+      endDate: '2026-08-22',
+      duration: '1 NIGHT / 2 DAYS',
+      price: '₹4,999 / PERSON',
+      priceCents: 499900,
       currency: 'INR',
       ageRestriction: 'NO AGE RESTRICTION',
       media: {
         type: 'image',
         urls: {
-          poster: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80',
-          desktop: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80'
+          poster: 'assets/images/destinations/kodaikanal.jpg',
+          desktop: 'assets/images/destinations/kodaikanal.jpg',
+          mobile: 'assets/images/destinations/kodaikanal.jpg'
         },
-        alt: 'Gavi Thekkady Rainforest'
+        alt: 'Kodaikanal Pine Forest'
       },
       spotsAvailable: 5,
-      overview: 'An intimate rainforest expedition crossing serene reservoir waters, secluded waterfall pools, and starlit campfire circles with fellow solo explorers.',
+      overview: 'Pine forests, cool mist, lake sunsets, and warm acoustic campfire with fellow solo travellers.',
       inclusions: [
-        'Curated Plantation & Forest Cottage Stay (2 Nights)',
-        'Private Forest Vehicle & Local Transport Throughout',
-        'Official KFDC Forest Entry Permits & Guide Fees',
-        'Guided Reservoir Boating Experience',
-        'All Authentic Kerala Meals on Trail',
-        'Founder-Led Group Facilitation & Campfire Circles'
+        'Hilltop Pine Cottage Stay (1 Night)',
+        'Private Transport from Madurai / Dindigul',
+        'Guided Pine Forest & Waterfall Walk',
+        'All Authentic Tamil Nadu Meals on Trail',
+        'Evening Acoustic Campfire Circle'
       ],
       publicMapAllowed: true,
-      regionSummary: 'Gavi / Thekkady region — forests, boating, waterfalls and viewpoints.'
+      regionSummary: 'Kodaikanal region — pine forests, cool lakes, waterfalls, and hill views.'
     }
   };
 }

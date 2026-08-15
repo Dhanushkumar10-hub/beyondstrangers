@@ -1,431 +1,145 @@
-import React, { useState } from 'react';
-import { Instagram, ArrowUpRight, Sparkles, MapPin, X } from 'lucide-react';
-import { MediaItem } from '../types';
+import React from 'react';
+import { Instagram, ArrowUpRight, Heart, MessageCircle } from 'lucide-react';
 
-interface InstagramGallerySectionProps {
-  mediaItems?: MediaItem[];
-  onOpenJoinModal?: () => void;
+interface GalleryPost {
+  id: string;
+  image: string;
+  alt: string;
+  caption: string;
+  location: string;
+  likes: number;
+  comments: number;
 }
 
-export const InstagramGallerySection: React.FC<InstagramGallerySectionProps> = ({
-  mediaItems = [],
-  onOpenJoinModal
-}) => {
-  const [selectedImage, setSelectedImage] = useState<MediaItem | null>(null);
-
-  // Filter media items for instagram or general gallery
-  const instagramPhotos = mediaItems.filter(
-    (m) => m.assignedSlot === 'instagram' || m.category === 'Destinations' || m.category === 'Nature' || m.category === 'Campfire'
-  ).slice(0, 6);
-
-  // Fallback if none mapped yet
-  const fallbackPhotos: MediaItem[] = [
+export const InstagramGallerySection: React.FC = () => {
+  const posts: GalleryPost[] = [
     {
       id: 'ig-1',
-      title: 'Tea Trails & Ridge Sunrise',
-      url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=85',
-      type: 'image',
-      category: 'Destinations',
-      size: '2.8 MB',
-      createdAt: '2026-08-01',
-      assignedSlot: 'instagram',
-      isDemo: true,
-      location: 'Munnar, Kerala',
-      caption: 'When the mist parts at 6:15 AM and the whole world turns emerald.',
-      instagramUrl: 'https://instagram.com/beyondstrangers.in'
+      image: 'assets/images/destinations/kodaikanal.jpg',
+      alt: 'Kodaikanal misty pines with travelers',
+      caption: 'Quiet morning at the pine trails.',
+      location: 'Kodaikanal, TN',
+      likes: 342,
+      comments: 28
     },
     {
       id: 'ig-2',
-      title: 'Campfire Acoustic Circle',
-      url: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=1000&q=80',
-      type: 'image',
-      category: 'Campfire',
-      size: '1.8 MB',
-      createdAt: '2026-08-03',
-      assignedSlot: 'instagram',
-      isDemo: true,
-      location: 'Coorg, Karnataka',
-      caption: 'No phones. Just embers, old Kishore Kumar songs, and new best friends.',
-      instagramUrl: 'https://instagram.com/beyondstrangers.in'
+      image: 'assets/images/stories/story_valparai.jpg',
+      alt: 'Valparai tea plantation walk',
+      caption: 'Wandering through 40 hairpin bends.',
+      location: 'Valparai, TN',
+      likes: 418,
+      comments: 35
     },
     {
       id: 'ig-3',
-      title: 'Living Root Bridge Forest Trek',
-      url: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1000&q=80',
-      type: 'image',
-      category: 'Nature',
-      size: '3.1 MB',
-      createdAt: '2026-08-05',
-      assignedSlot: 'instagram',
-      isDemo: true,
-      location: 'Nongriat, Meghalaya',
-      caption: 'Root bridges woven by living trees over hundreds of years.',
-      instagramUrl: 'https://instagram.com/beyondstrangers.in'
+      image: 'assets/images/destinations/ooty.jpg',
+      alt: 'Nilgiris mountain overlook',
+      caption: 'Chilly winds & Nilgiri pines.',
+      location: 'Ooty, TN',
+      likes: 290,
+      comments: 19
     },
     {
       id: 'ig-4',
-      title: 'Quiet Golden Hour Backwater Kayak',
-      url: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1000&q=80',
-      type: 'image',
-      category: 'Destinations',
-      size: '2.9 MB',
-      createdAt: '2026-08-08',
-      assignedSlot: 'instagram',
-      isDemo: true,
-      location: 'South Goa, India',
-      caption: 'Paddling through silent mangrove channels as the sun dips into the sea.',
-      instagramUrl: 'https://instagram.com/beyondstrangers.in'
+      image: 'assets/images/stories/story_kolli.jpg',
+      alt: 'Kolli hills waterfall trail',
+      caption: '70 hairpin bends to the falls.',
+      location: 'Kolli Hills, TN',
+      likes: 512,
+      comments: 44
     },
     {
       id: 'ig-5',
-      title: 'Hampi Sunset Boulders',
-      url: 'https://images.unsplash.com/photo-1600100397608-f010f444b415?auto=format&fit=crop&w=1000&q=80',
-      type: 'image',
-      category: 'Nature',
-      size: '2.4 MB',
-      createdAt: '2026-08-09',
-      assignedSlot: 'instagram',
-      isDemo: true,
-      location: 'Matanga Hill, Hampi',
-      caption: 'Watching history glow in orange and purple over the Tungabhadra.',
-      instagramUrl: 'https://instagram.com/beyondstrangers.in'
+      image: 'assets/images/destinations/meghamalai.jpg',
+      alt: 'High wavys cloud sunrise',
+      caption: 'Clouds rolling beneath our feet.',
+      location: 'Meghamalai, TN',
+      likes: 388,
+      comments: 27
     },
     {
       id: 'ig-6',
-      title: 'Pine Forest Trail Walk',
-      url: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80',
-      type: 'image',
-      category: 'Nature',
-      size: '2.2 MB',
-      createdAt: '2026-08-10',
-      assignedSlot: 'instagram',
-      isDemo: true,
-      location: 'Western Ghats, India',
-      caption: 'Step by step, the mountain air clears away months of city noise.',
-      instagramUrl: 'https://instagram.com/beyondstrangers.in'
+      image: 'assets/images/stories/story_campfire.jpg',
+      alt: 'Campfire acoustic storytelling',
+      caption: 'Strangers at 8 PM. Friends by midnight.',
+      location: 'Western Ghats',
+      likes: 620,
+      comments: 52
     }
   ];
 
-  const displayPhotos = instagramPhotos.length >= 4 ? instagramPhotos : fallbackPhotos;
-
   return (
-    <section id="from-the-journey" className="py-24 sm:py-28 bg-white border-t border-[#E5E5E5]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-14">
+    <section className="py-16 bg-[#F7F5EF] border-t border-[#A8BFA3]/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
-        {/* Editorial Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-[#666666] font-medium">
-              <Instagram className="w-4 h-4 text-[#0A0A0A]" />
-              <span>FROM THE JOURNEY • @BEYONDSTRANGERS.IN</span>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-2 max-w-xl">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D8C3A5] border border-[#A8BFA3]/50 text-[#202622] text-xs font-mono font-bold">
+              <Instagram className="w-3.5 h-3.5 text-[#183A2A]" />
+              <span>@BEYONDSTRANGERS.IN</span>
             </div>
-            <h2 className="text-[clamp(36px,4vw,52px)] font-bold font-serif-editorial text-[#0A0A0A] leading-tight">
-              Real Moments. No Filters.
+            <h2 className="text-3xl font-serif font-bold text-[#202622]">
+              Real Travel Stories
             </h2>
-            <p className="text-base sm:text-lg text-[#555555] font-light max-w-xl leading-relaxed">
-              Candid frames captured by travelers, captains, and newfound friends across our small-group expeditions.
+            <p className="text-xs sm:text-sm text-[#202622]/80">
+              Captured by travelers on real South India weekend cohorts.
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
-            <a
-              href="https://instagram.com/beyondstrangers.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[48px] px-6 py-3 bg-[#0A0A0A] hover:bg-[#262626] text-white font-semibold text-sm sm:text-base tracking-wider uppercase transition-colors inline-flex items-center gap-2.5 shadow-xs"
-            >
-              <span>FOLLOW @BEYONDSTRANGERS.IN</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
-          </div>
+          <a
+            href="https://instagram.com/beyondstrangers.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary text-xs py-2 px-4 flex items-center gap-2"
+          >
+            <Instagram className="w-4 h-4 text-[#183A2A]" />
+            <span>Follow on Instagram</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-[#202622]" />
+          </a>
         </div>
 
-        {/* =========================================================================
-            SOPHISTICATED EDITORIAL ASYMMETRICAL GRID
-            [ LARGE FEATURE IMAGE ]
-            [ IMAGE ]               [ IMAGE ]
-                   [ PORTRAIT IMAGE ]
-            [ IMAGE ]               [ IMAGE ]
-            ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-stretch">
-          
-          {/* 1. Large Hero Feature Photo (Span 7) */}
-          {displayPhotos[0] && (
+        {/* 6 Post Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          {posts.map((post) => (
             <div
-              onClick={() => setSelectedImage(displayPhotos[0])}
-              className="md:col-span-7 group relative aspect-[16/10] md:aspect-auto md:min-h-[440px] overflow-hidden border border-[#E5E5E5] bg-[#F7F7F5] cursor-pointer"
+              key={post.id}
+              className="group relative aspect-square rounded-2xl overflow-hidden bg-[#D8C3A5] border border-[#A8BFA3] shadow-sm"
             >
               <img
-                src={displayPhotos[0].url}
-                alt={displayPhotos[0].title}
+                src={post.image}
+                alt={post.alt}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
-              
-              {/* Demo Badge if not yet replaced by admin */}
-              {displayPhotos[0].isDemo && (
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-xs text-[#0A0A0A] text-[11px] font-mono font-medium px-2.5 py-1 uppercase tracking-wider border border-[#E5E5E5]">
-                  DEMO IMAGE
+
+              {/* Hover Details Overlay */}
+              <div className="absolute inset-0 bg-[#183A2A]/85 opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-between text-white">
+                <div className="text-[10px] font-mono uppercase text-[#D8C3A5] font-bold">
+                  {post.location}
                 </div>
-              )}
 
-              {/* Hover Story Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                <span className="bg-white text-[#0A0A0A] px-4 py-2 text-xs font-bold font-mono tracking-widest uppercase shadow-md">
-                  VIEW STORY →
-                </span>
-              </div>
+                <p className="text-xs font-medium line-clamp-3 text-[#F7F5EF]">
+                  "{post.caption}"
+                </p>
 
-              {/* Bottom Caption & Location */}
-              <div className="absolute bottom-6 left-6 right-6 text-white space-y-1.5 pointer-events-none">
-                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#CCCCCC]">
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>{displayPhotos[0].location || 'Western Ghats'}</span>
-                </div>
-                <div className="text-xl sm:text-2xl font-bold font-serif-editorial">
-                  {displayPhotos[0].title}
-                </div>
-                {displayPhotos[0].caption && (
-                  <p className="text-sm sm:text-base text-[#E5E5E5] font-light line-clamp-1">
-                    "{displayPhotos[0].caption}"
-                  </p>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* 2. Right Side 2 Stacked Supporting Photos (Span 5) */}
-          <div className="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-6 sm:gap-8">
-            {displayPhotos.slice(1, 3).map((photo) => (
-              <div
-                key={photo.id}
-                onClick={() => setSelectedImage(photo)}
-                className="group relative aspect-[16/10] md:aspect-auto md:h-[208px] overflow-hidden border border-[#E5E5E5] bg-[#F7F7F5] cursor-pointer"
-              >
-                <img
-                  src={photo.url}
-                  alt={photo.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
-                
-                {photo.isDemo && (
-                  <div className="absolute top-3 left-3 bg-white/90 text-[#0A0A0A] text-[10px] font-mono px-2 py-0.5 uppercase tracking-wider">
-                    DEMO IMAGE
-                  </div>
-                )}
-
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <span className="bg-white text-[#0A0A0A] px-3 py-1.5 text-xs font-bold font-mono tracking-wider uppercase">
-                    BEYOND STRANGERS
+                <div className="flex items-center gap-3 text-[10px] font-mono text-[#A8BFA3]">
+                  <span className="flex items-center gap-1">
+                    <Heart className="w-3 h-3 text-[#D8C3A5] fill-[#D8C3A5]" />
+                    {post.likes}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <MessageCircle className="w-3 h-3" />
+                    {post.comments}
                   </span>
                 </div>
-
-                <div className="absolute bottom-4 left-4 right-4 text-white space-y-0.5 pointer-events-none">
-                  <div className="text-[11px] font-mono uppercase text-[#CCCCCC]">{photo.location}</div>
-                  <div className="text-base sm:text-lg font-bold font-serif-editorial truncate">{photo.title}</div>
-                </div>
               </div>
-            ))}
-          </div>
-
-          {/* 3. Lower Row: Portrait Center + 2 Surrounding Photos */}
-          {displayPhotos.length > 3 && (
-            <>
-              {/* Lower Left (Span 4) */}
-              {displayPhotos[3] && (
-                <div
-                  onClick={() => setSelectedImage(displayPhotos[3])}
-                  className="md:col-span-4 group relative aspect-[4/3] md:aspect-auto md:h-[300px] overflow-hidden border border-[#E5E5E5] bg-[#F7F7F5] cursor-pointer"
-                >
-                  <img
-                    src={displayPhotos[3].url}
-                    alt={displayPhotos[3].title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
-                  
-                  {displayPhotos[3].isDemo && (
-                    <div className="absolute top-3 left-3 bg-white/90 text-[#0A0A0A] text-[10px] font-mono px-2 py-0.5 uppercase tracking-wider">
-                      DEMO IMAGE
-                    </div>
-                  )}
-
-                  <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
-                    <div className="text-[11px] font-mono uppercase text-[#CCCCCC]">{displayPhotos[3].location}</div>
-                    <div className="text-base sm:text-lg font-bold font-serif-editorial truncate">{displayPhotos[3].title}</div>
-                  </div>
-                </div>
-              )}
-
-              {/* Lower Center - Portrait Emphasis (Span 4) */}
-              {displayPhotos[4] && (
-                <div
-                  onClick={() => setSelectedImage(displayPhotos[4])}
-                  className="md:col-span-4 group relative aspect-[4/3] md:aspect-auto md:h-[300px] overflow-hidden border border-[#E5E5E5] bg-[#F7F7F5] cursor-pointer"
-                >
-                  <img
-                    src={displayPhotos[4].url}
-                    alt={displayPhotos[4].title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
-                  
-                  {displayPhotos[4].isDemo && (
-                    <div className="absolute top-3 left-3 bg-white/90 text-[#0A0A0A] text-[10px] font-mono px-2 py-0.5 uppercase tracking-wider">
-                      DEMO IMAGE
-                    </div>
-                  )}
-
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    <span className="bg-white text-[#0A0A0A] px-3.5 py-1.5 text-xs font-bold font-mono tracking-wider uppercase">
-                      VIEW STORY →
-                    </span>
-                  </div>
-
-                  <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
-                    <div className="text-[11px] font-mono uppercase text-[#CCCCCC]">{displayPhotos[4].location}</div>
-                    <div className="text-base sm:text-lg font-bold font-serif-editorial truncate">{displayPhotos[4].title}</div>
-                  </div>
-                </div>
-              )}
-
-              {/* Lower Right (Span 4) */}
-              {displayPhotos[5] && (
-                <div
-                  onClick={() => setSelectedImage(displayPhotos[5])}
-                  className="md:col-span-4 group relative aspect-[4/3] md:aspect-auto md:h-[300px] overflow-hidden border border-[#E5E5E5] bg-[#F7F7F5] cursor-pointer"
-                >
-                  <img
-                    src={displayPhotos[5].url}
-                    alt={displayPhotos[5].title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
-                  
-                  {displayPhotos[5].isDemo && (
-                    <div className="absolute top-3 left-3 bg-white/90 text-[#0A0A0A] text-[10px] font-mono px-2 py-0.5 uppercase tracking-wider">
-                      DEMO IMAGE
-                    </div>
-                  )}
-
-                  <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none">
-                    <div className="text-[11px] font-mono uppercase text-[#CCCCCC]">{displayPhotos[5].location}</div>
-                    <div className="text-base sm:text-lg font-bold font-serif-editorial truncate">{displayPhotos[5].title}</div>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-
-        </div>
-
-        {/* Section Footer Callout */}
-        <div className="p-8 sm:p-10 bg-[#F7F7F5] border border-[#E5E5E5] flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-1 text-center sm:text-left">
-            <div className="text-xs font-mono uppercase tracking-[0.2em] text-[#666666] font-medium">
-              FOLLOW THE JOURNEY
             </div>
-            <div className="text-2xl sm:text-3xl font-bold font-serif-editorial text-[#0A0A0A]">
-              @beyondstrangers.in
-            </div>
-            <p className="text-sm sm:text-base text-[#555555] font-light">
-              Tag <span className="font-mono text-[#0A0A0A]">#TheStrangerSociety</span> on your travels to be featured in our permanent dispatch archive.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-4 shrink-0">
-            <a
-              href="https://instagram.com/beyondstrangers.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="min-h-[48px] px-8 py-3.5 bg-[#0A0A0A] hover:bg-[#262626] text-white font-semibold text-sm sm:text-base tracking-wider uppercase transition-colors inline-flex items-center gap-2 shadow-xs"
-            >
-              <span>VIEW INSTAGRAM</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
-          </div>
+          ))}
         </div>
 
       </div>
-
-      {/* Lightbox / Story Preview Modal */}
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div 
-            className="bg-white max-w-3xl w-full border border-[#E5E5E5] overflow-hidden shadow-2xl space-y-0"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative aspect-[16/10] sm:aspect-[16/9] bg-[#0A0A0A]">
-              <img
-                src={selectedImage.url}
-                alt={selectedImage.title}
-                className="w-full h-full object-cover"
-              />
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 p-2 bg-black/70 hover:bg-black text-white transition-colors"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="p-6 sm:p-8 space-y-4 bg-white">
-              <div className="flex items-center justify-between border-b border-[#E5E5E5] pb-3">
-                <div className="text-xs font-mono uppercase text-[#666666] tracking-wider font-medium">
-                  {selectedImage.location || 'India'} • @beyondstrangers.in
-                </div>
-                {selectedImage.isDemo && (
-                  <span className="text-[10px] font-mono bg-[#F0F0EE] px-2 py-0.5 text-[#666666]">
-                    DEMO IMAGE
-                  </span>
-                )}
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl font-bold font-serif-editorial text-[#0A0A0A]">
-                {selectedImage.title}
-              </h3>
-
-              {selectedImage.caption && (
-                <p className="text-base sm:text-lg text-[#444444] font-light leading-relaxed">
-                  "{selectedImage.caption}"
-                </p>
-              )}
-
-              <div className="pt-2 flex items-center justify-between">
-                <a
-                  href="https://instagram.com/beyondstrangers.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-bold uppercase tracking-wider text-[#0A0A0A] hover:underline inline-flex items-center gap-1.5"
-                >
-                  <span>Open on Instagram</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
-
-                <button
-                  onClick={() => {
-                    setSelectedImage(null);
-                    if (onOpenJoinModal) onOpenJoinModal();
-                  }}
-                  className="px-5 py-2.5 bg-[#0A0A0A] text-white text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-[#262626] transition-colors"
-                >
-                  Join This Tribe
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

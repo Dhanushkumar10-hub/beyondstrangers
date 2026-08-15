@@ -1,31 +1,33 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, Mountain, Calendar } from 'lucide-react';
-import { Destination, Trip, ActiveTab } from '../types';
+import { Destination, Trip } from '../types';
+import { ArrowLeft, MapPin, Compass } from 'lucide-react';
 import { TripCard } from '../components/TripCard';
+import { TripHighlightBadge } from '../components/TripHighlightBadge';
 
 interface DestinationDetailViewProps {
   destination: Destination | null;
   onBack: () => void;
-  onSelectTrip: (trip: Trip) => void;
   trips: Trip[];
-  setActiveTab: (tab: ActiveTab) => void;
+  onSelectTrip: (trip: Trip) => void;
+  onBookNow: (trip: Trip) => void;
+  savedTripIds?: string[];
+  onToggleSaveTrip?: (tripId: string) => void;
 }
 
 export const DestinationDetailView: React.FC<DestinationDetailViewProps> = ({
   destination,
   onBack,
-  onSelectTrip,
   trips,
-  setActiveTab
+  onSelectTrip,
+  onBookNow,
+  savedTripIds = [],
+  onToggleSaveTrip
 }) => {
   if (!destination) {
     return (
-      <div className="pt-32 pb-24 text-center text-[#0A0A0A] bg-white space-y-4">
-        <h2 className="text-2xl font-serif-editorial">Destination Not Found</h2>
-        <button
-          onClick={onBack}
-          className="px-6 py-2.5 bg-[#0A0A0A] text-white text-xs font-bold uppercase tracking-wider"
-        >
+      <div className="min-h-screen pt-28 pb-20 px-4 text-center space-y-4 bg-[#F7F5EF]">
+        <p className="text-sm font-mono text-[#202622]">Destination not found.</p>
+        <button onClick={onBack} className="btn-primary text-xs py-2 px-4">
           Return to Destinations
         </button>
       </div>
@@ -33,99 +35,75 @@ export const DestinationDetailView: React.FC<DestinationDetailViewProps> = ({
   }
 
   const matchingTrips = trips.filter(t => 
-    t.destination.toLowerCase().includes(destination.name.toLowerCase()) ||
-    destination.name.toLowerCase().includes(t.destination.split(',')[0].toLowerCase())
+    t.destination.toLowerCase().includes(destination.name.toLowerCase())
   );
 
   return (
-    <div className="bg-white text-[#0A0A0A] pt-24 pb-28 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 bg-[#F7F5EF] text-[#202622]">
+      <div className="max-w-6xl mx-auto space-y-10">
         
-        {/* Top Back Navigation */}
+        {/* Back Button */}
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-[#0A0A0A] hover:text-[#555555] transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#183A2A] hover:text-[#2F6B45]"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>ALL DESTINATIONS</span>
+          <span>BACK TO ALL DESTINATIONS</span>
         </button>
 
-        {/* Hero Section */}
-        <div className="space-y-6">
-          <div className="text-xs font-mono uppercase tracking-[0.2em] text-[#777777]">
-            {destination.region || destination.state}
-          </div>
-          <h1 className="text-4xl sm:text-6xl font-bold font-serif-editorial text-[#0A0A0A]">
-            {destination.name}
-          </h1>
-          <p className="text-base text-[#555555] font-light max-w-2xl">
-            {destination.tagline || destination.subtitle}
-          </p>
+        {/* Hero Banner */}
+        <div className="relative aspect-[21/9] w-full rounded-3xl overflow-hidden bg-[#D8C3A5] border border-[#A8BFA3] shadow-sm">
+          <img
+            src={destination.heroImage}
+            alt={destination.name}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#202622]/80 via-transparent to-transparent" />
 
-          <div className="relative aspect-[21/9] w-full overflow-hidden border border-[#E5E5E5] bg-[#F7F7F5]">
-            <img
-              src={destination.coverImage || destination.image}
-              alt={destination.name}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-
-        {/* Content Breakdown */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-8 border-t border-[#E5E5E5]">
-          <div className="lg:col-span-4 space-y-4">
-            <div className="text-xs font-mono uppercase tracking-[0.2em] text-[#777777]">
-              TERRAIN PROFILE
-            </div>
-            <h2 className="text-2xl font-bold font-serif-editorial text-[#0A0A0A]">
-              Geography & Best Season
-            </h2>
-            <div className="space-y-2 text-xs text-[#555555] pt-2 font-mono">
-              <div>Elevation: {destination.elevation || destination.altitude || '1,600m'}</div>
-              <div>Best Window: {destination.bestSeason || 'October to March'}</div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-8 space-y-6 text-sm text-[#444444] font-light leading-relaxed">
-            <p>
-              {destination.description || destination.shortDescription || destination.fullStory}
+          <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
+            <span className="bg-[#183A2A] text-[#F7F5EF] text-[10px] font-mono font-bold px-2.5 py-1 rounded uppercase">
+              {destination.state}
+            </span>
+            <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#F7F5EF]">
+              {destination.name}
+            </h1>
+            <p className="text-xs sm:text-sm text-[#F7F5EF]/90 max-w-xl">
+              {destination.tagline}
             </p>
           </div>
         </div>
 
-        {/* Available Chapters */}
-        <div className="space-y-8 pt-12 border-t border-[#E5E5E5]">
-          <div className="space-y-2">
-            <div className="text-xs font-mono uppercase tracking-[0.2em] text-[#777777]">
-              ACTIVE EXPEDITIONS
-            </div>
-            <h2 className="text-3xl font-bold font-serif-editorial text-[#0A0A0A]">
-              Chapters in {destination.name}
-            </h2>
-          </div>
+        {/* Highlights Bar */}
+        <div className="p-4 rounded-2xl bg-[#D8C3A5]/30 border border-[#A8BFA3] flex flex-wrap gap-2">
+          {destination.highlights.map((hl, i) => (
+            <TripHighlightBadge key={i} size="sm" highlight={hl} />
+          ))}
+        </div>
+
+        {/* Matching Trips */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-serif font-bold text-[#183A2A]">
+            Upcoming Chapters in {destination.name}
+          </h2>
 
           {matchingTrips.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {matchingTrips.map((trip) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {matchingTrips.map(trip => (
                 <TripCard
                   key={trip.id}
                   trip={trip}
                   onSelectTrip={onSelectTrip}
-                  onBookNow={onSelectTrip}
+                  onBookNow={onBookNow}
+                  isSaved={savedTripIds.includes(trip.id)}
+                  onToggleSave={onToggleSaveTrip}
                 />
               ))}
             </div>
           ) : (
-            <div className="p-8 bg-[#F7F7F5] border border-[#E5E5E5] text-center space-y-3">
-              <p className="text-xs text-[#666666]">
-                New chapters for {destination.name} are currently being scouted and vetted.
+            <div className="p-8 rounded-2xl bg-white border border-[#A8BFA3] text-center space-y-2">
+              <p className="text-xs font-mono text-[#202622]">
+                New cohorts for {destination.name} are currently being scheduled.
               </p>
-              <button
-                onClick={() => { setActiveTab('experiences'); }}
-                className="px-6 py-2.5 bg-[#0A0A0A] text-white text-xs font-bold uppercase tracking-wider"
-              >
-                Browse All Active Trips
-              </button>
             </div>
           )}
         </div>

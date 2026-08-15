@@ -1,149 +1,106 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    /* Design Tokens - Exact Requested Pastel Palette */
-    --color-accent-1: #D4CADF;
-    --color-accent-2: #D4D1D7;
-    --color-accent-3: #D5D1D7;
-    --color-accent-4: #D6D1D7;
-    --color-accent-5: #D7D1D7;
-
-    /* Core High-Contrast Tokens */
-    --color-text: #080808;
-    --color-bg: #FFFFFF;
-    --color-cta: #080808;
-    --color-cta-text: #FFFFFF;
-
-    /* Semantic Tints & Surfaces */
-    --bg-primary: #FFFFFF;
-    --bg-secondary: #FAF9F6;
-    --text-primary: #080808;
-    --text-secondary: #2B2B2B;
-    --text-muted: #666666;
-    --border-subtle: #D6D1D7;
-
-    /* Typography Variables */
-    --font-heading: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
-    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
-  }
-
-  html {
-    font-size: 16px;
-    scroll-behavior: smooth;
-  }
-
-  body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1, h2, h3, h4, .font-serif-editorial {
-    font-family: var(--font-heading);
-    letter-spacing: -0.02em;
-    color: var(--color-text);
-  }
+@theme {
+  --color-forest-deep: #183A2A;
+  --color-forest: #2F6B45;
+  --color-leaf: #5F8F5B;
+  --color-sage: #A8BFA3;
+  --color-earth: #795548;
+  --color-sand: #D8C3A5;
+  --color-natural-white: #F7F5EF;
+  --color-charcoal: #202622;
 }
 
-/* ========================================================================= */
-/* UTILITY CLASSES FOR THEME TOKENS & SAFE CONTRAST                         */
-/* ========================================================================= */
+:root {
+  --forest-deep: #183A2A;
+  --forest: #2F6B45;
+  --leaf: #5F8F5B;
+  --sage: #A8BFA3;
+  --earth: #795548;
+  --sand: #D8C3A5;
+  --natural-white: #F7F5EF;
+  --charcoal: #202622;
 
-.bg-accent-1 { background-color: var(--color-accent-1); }
-.bg-accent-2 { background-color: var(--color-accent-2); }
-.bg-accent-3 { background-color: var(--color-accent-3); }
-.bg-accent-4 { background-color: var(--color-accent-4); }
-.bg-accent-5 { background-color: var(--color-accent-5); }
-
-.border-accent-1 { border-color: var(--color-accent-1); }
-.border-accent-2 { border-color: var(--color-accent-2); }
-.border-accent-3 { border-color: var(--color-accent-3); }
-.border-accent-4 { border-color: var(--color-accent-4); }
-.border-accent-5 { border-color: var(--color-accent-5); }
-
-.text-foreground { color: var(--color-text); }
-.text-cta { color: var(--color-cta-text); }
-
-/* High-Contrast Accessible Buttons */
-.btn-primary {
-  background-color: var(--color-cta);
-  color: var(--color-cta-text);
-  min-height: 48px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-.btn-primary:hover {
-  background-color: #1F1F1F;
-}
-.btn-primary:focus-visible {
-  outline: 2px solid var(--color-cta);
-  outline-offset: 2px;
+  /* Typography */
+  --font-serif: 'Playfair Display', 'Cormorant Garamond', 'Newsreader', Georgia, serif;
+  --font-sans: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.btn-secondary {
-  background-color: transparent;
-  color: var(--color-text);
-  min-height: 48px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--color-accent-4);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.btn-secondary:hover {
-  background-color: var(--color-accent-1);
-  border-color: var(--color-text);
-}
-.btn-secondary:focus-visible {
-  outline: 2px solid var(--color-text);
-  outline-offset: 2px;
+/* Base resets & typography */
+body {
+  background-color: var(--natural-white);
+  color: var(--charcoal);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Semi-transparent dark overlay for high contrast text placed over light/media images */
-.accent-overlay {
-  background: linear-gradient(180deg, rgba(8, 8, 8, 0.45) 0%, rgba(8, 8, 8, 0.85) 100%);
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
 }
 
-.surface-tint-1 {
-  background-color: rgba(212, 202, 223, 0.35); /* #D4CADF tinted */
-}
-.surface-tint-2 {
-  background-color: rgba(212, 209, 215, 0.35); /* #D4D1D7 tinted */
-}
-
-/* Minimalist Editorial Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #F7F7F5;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-accent-4);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-1);
+  height: 6px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+::-webkit-scrollbar-track {
+  background: #F7F5EF;
 }
+
+::-webkit-scrollbar-thumb {
+  background: #A8BFA3;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2F6B45;
+}
+
+/* Selection */
+::selection {
+  background-color: #D8C3A5;
+  color: #183A2A;
+}
+
+/* Primary Button - Editorial green */
+.btn-editorial-primary {
+  background-color: #2F6B45;
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.125rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-editorial-primary:hover {
+  background-color: #3B7E55;
+  transform: translateY(-1px);
+}
+
+/* Secondary Button - Outline */
+.btn-editorial-secondary {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.125rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  backdrop-filter: blur(4px);
+}
+
+.btn-editorial-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.35);
+}
+

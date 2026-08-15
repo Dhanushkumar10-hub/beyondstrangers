@@ -1,92 +1,78 @@
 import React, { useState } from 'react';
-import { ArrowRight, Filter } from 'lucide-react';
-import { Trip, TribePersonality } from '../types';
-import { DEMO_TRIPS } from '../data/mockData';
 import { TripCard } from '../components/TripCard';
+import { TripHighlightBadge } from '../components/TripHighlightBadge';
+import { Trip, TripCategory } from '../types';
+import { Sparkles, Compass, Filter } from 'lucide-react';
 
 interface ExperiencesViewProps {
+  trips: Trip[];
   onSelectTrip: (trip: Trip) => void;
-  onOpenJoinModal: () => void;
-  trips?: Trip[];
+  onBookNow: (trip: Trip) => void;
+  savedTripIds?: string[];
+  onToggleSaveTrip?: (tripId: string) => void;
 }
 
-export const ExperiencesView: React.FC<ExperiencesViewProps> = ({ 
-  onSelectTrip, 
-  onOpenJoinModal,
-  trips = DEMO_TRIPS 
+export const ExperiencesView: React.FC<ExperiencesViewProps> = ({
+  trips,
+  onSelectTrip,
+  onBookNow,
+  savedTripIds = [],
+  onToggleSaveTrip
 }) => {
-  const [selectedRegion, setSelectedRegion] = useState<string>('ALL');
-  const [selectedPersonality, setSelectedPersonality] = useState<TribePersonality | 'ALL'>('ALL');
+  const [selectedDestination, setSelectedDestination] = useState<string>('ALL');
 
-  const filteredTrips = trips.filter((trip) => {
-    const matchRegion = selectedRegion === 'ALL' || trip.region === selectedRegion;
-    const matchPersonality = selectedPersonality === 'ALL' || trip.tribePersonalityMatch.includes(selectedPersonality);
-    return matchRegion && matchPersonality;
-  });
+  const destinations = ['ALL', 'Kodaikanal', 'Ooty', 'Valparai', 'Kolli Hills', 'Meghamalai'];
+
+  const filteredTrips = selectedDestination === 'ALL'
+    ? trips
+    : trips.filter(t => t.destination.toLowerCase().includes(selectedDestination.toLowerCase()));
 
   return (
-    <div className="bg-white text-[#0A0A0A] pt-24 pb-28 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 bg-[#F7F5EF] text-[#202622]">
+      <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Header */}
-        <div className="space-y-3 max-w-3xl">
-          <div className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-[#666666] font-medium">
-            CURATED SMALL GROUPS (10–12 TRAVELLERS)
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D8C3A5] border border-[#A8BFA3]/50 text-[#202622] text-xs font-mono font-bold">
+            <Compass className="w-3.5 h-3.5 text-[#183A2A]" />
+            <span>WEEKEND CHAPTERS</span>
           </div>
-          <h1 className="text-[clamp(36px,4.5vw,58px)] font-bold font-serif-editorial text-[#0A0A0A] tracking-tight leading-tight">
-            Upcoming Experiences
+
+          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#183A2A]">
+            Curated Experiences
           </h1>
-          <p className="text-base sm:text-lg text-[#555555] font-light leading-relaxed">
-            Each chapter is intentionally crafted with private boutique stays, verified local captains, unscripted moments, and a balanced solo traveler dynamic.
+          <p className="text-xs sm:text-sm text-[#202622]/80 font-medium">
+            Handpicked stays, private trails, and small cohorts across Tamil Nadu.
           </p>
         </div>
 
-        {/* Minimal Filters */}
-        <div className="p-6 sm:p-8 bg-[#F7F7F5] border border-[#E5E5E5] grid grid-cols-1 sm:grid-cols-2 gap-6 shadow-xs">
-          <div>
-            <label className="text-xs sm:text-sm font-mono uppercase tracking-wider text-[#555555] block mb-2 font-semibold">
-              Region
-            </label>
-            <select
-              value={selectedRegion}
-              onChange={(e) => setSelectedRegion(e.target.value)}
-              className="w-full bg-white border border-[#E5E5E5] px-4 py-3 text-sm sm:text-base text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A] font-medium"
+        {/* Destination Filter Pills */}
+        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2">
+          {destinations.map((dest) => (
+            <button
+              key={dest}
+              onClick={() => setSelectedDestination(dest)}
+              className={`text-xs font-mono font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider transition-all whitespace-nowrap ${
+                selectedDestination === dest
+                  ? 'bg-[#183A2A] text-[#F7F5EF] shadow-sm'
+                  : 'bg-[#D8C3A5]/40 text-[#202622] hover:bg-[#D8C3A5] border border-[#A8BFA3]/60'
+              }`}
             >
-              <option value="ALL">All Regions in India</option>
-              <option value="South India">South India (Munnar, Coorg)</option>
-              <option value="North East">North East India (Meghalaya)</option>
-              <option value="West India">West India (Goa)</option>
-              <option value="North India & Himalayas">North India (Spiti Valley)</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="text-xs sm:text-sm font-mono uppercase tracking-wider text-[#555555] block mb-2 font-semibold">
-              Tribe Personality
-            </label>
-            <select
-              value={selectedPersonality}
-              onChange={(e) => setSelectedPersonality(e.target.value as TribePersonality | 'ALL')}
-              className="w-full bg-white border border-[#E5E5E5] px-4 py-3 text-sm sm:text-base text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A] font-medium"
-            >
-              <option value="ALL">All Traveler Archetypes</option>
-              <option value="THE ADVENTURER">THE ADVENTURER</option>
-              <option value="THE EXPLORER">THE EXPLORER</option>
-              <option value="THE SOCIAL ONE">THE SOCIAL ONE</option>
-              <option value="THE SLOW TRAVELLER">THE SLOW TRAVELLER</option>
-              <option value="THE STORYTELLER">THE STORYTELLER</option>
-            </select>
-          </div>
+              {dest}
+            </button>
+          ))}
         </div>
 
         {/* Trips Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTrips.map((trip) => (
             <TripCard
               key={trip.id}
               trip={trip}
               onSelectTrip={onSelectTrip}
-              onBookNow={onSelectTrip}
+              onBookNow={onBookNow}
+              isSaved={savedTripIds.includes(trip.id)}
+              onToggleSave={onToggleSaveTrip}
             />
           ))}
         </div>

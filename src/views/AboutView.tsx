@@ -1,134 +1,77 @@
 import React from 'react';
-import { ArrowRight, Instagram } from 'lucide-react';
-import { FOUNDER_DATA } from '../data/mockData';
+import { Compass, ShieldCheck, Heart, MapPin, Mail, Instagram } from 'lucide-react';
 
 export const AboutView: React.FC = () => {
   return (
-    <div className="bg-white text-[#0A0A0A] pt-24 pb-28 min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 bg-[#F7F5EF] text-[#202622]">
+      <div className="max-w-4xl mx-auto space-y-16">
         
-        {/* Brand Mission Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-6">
-          <div className="text-xs sm:text-sm font-mono uppercase tracking-[0.25em] text-[#666666] font-medium">
-            MANIFESTO & ORIGINS
+        {/* Header */}
+        <div className="text-center space-y-4 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D8C3A5] border border-[#A8BFA3]/50 text-[#202622] text-xs font-mono font-bold">
+            <Compass className="w-3.5 h-3.5 text-[#183A2A]" />
+            <span>ORIGIN & MISSION</span>
           </div>
 
-          <h1 className="text-[clamp(38px,4.5vw,62px)] font-bold font-serif-editorial text-[#0A0A0A] tracking-tight leading-[1.08]">
-            Beyond Strangers
+          <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#183A2A]">
+            Why Beyond Strangers Exists
           </h1>
 
-          <p className="text-xl sm:text-2xl font-serif-editorial italic text-[#333333]">
-            "Where strangers find their tribe."
-          </p>
-
-          <p className="text-base sm:text-lg text-[#555555] font-light leading-relaxed max-w-2xl mx-auto">
-            Beyond Strangers is a travel collective operating as “The Stranger Society.” We design intimate small-group escapes across India for independent individuals, solo travelers, and curious minds who believe the deepest memories happen when you step outside familiar circles.
+          <p className="text-xs sm:text-sm text-[#202622]/80 font-medium leading-relaxed">
+            Founded in Tamil Nadu to solve a simple modern problem: when you want to travel, but your friends are busy, you shouldn’t have to stay home.
           </p>
         </div>
 
-        {/* Founder Story */}
-        <div className="bg-[#F7F7F5] border border-[#E5E5E5] p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-12 items-center shadow-xs">
-          <div className="md:col-span-5 aspect-[4/5] border border-[#E5E5E5] overflow-hidden bg-white">
-            <img
-              src={FOUNDER_DATA.avatar}
-              alt={FOUNDER_DATA.name}
-              loading="lazy"
-              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-            />
+        {/* 3 Visual Pillars */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="p-6 rounded-2xl bg-[#D8C3A5]/30 border border-[#A8BFA3] space-y-3">
+            <div className="p-2.5 rounded-xl bg-[#183A2A] text-[#D8C3A5] w-fit">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h3 className="font-serif font-bold text-base text-[#183A2A]">Safe Solo Spaces</h3>
+            <p className="text-xs text-[#202622]/80 leading-relaxed">
+              Strictly vetted cohorts with 50:50 gender balance guidelines and dedicated on-ground leads.
+            </p>
           </div>
 
-          <div className="md:col-span-7 space-y-5">
-            <div className="text-xs sm:text-sm font-mono uppercase tracking-widest text-[#666666] font-semibold">
-              FOUNDER'S LETTER
+          <div className="p-6 rounded-2xl bg-[#D8C3A5]/30 border border-[#A8BFA3] space-y-3">
+            <div className="p-2.5 rounded-xl bg-[#183A2A] text-[#D8C3A5] w-fit">
+              <MapPin className="w-5 h-5" />
             </div>
+            <h3 className="font-serif font-bold text-base text-[#183A2A]">Secret South India</h3>
+            <p className="text-xs text-[#202622]/80 leading-relaxed">
+              We skip tourist traps and take you to private estates, secret waterfalls, and hidden ridge trails.
+            </p>
+          </div>
 
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif-editorial text-[#0A0A0A] leading-tight">
-              Why Beyond Strangers Exists
-            </h2>
-
-            <div className="space-y-4 text-base sm:text-[17px] text-[#444444] font-light leading-relaxed">
-              <p>
-                Too many people cancel their dream trips because coordinating with friend groups in adulthood is hard. Work deadlines clash, priorities shift, and life gets in the way.
-              </p>
-              <p>
-                We built Beyond Strangers to eliminate that friction. You book your spot, pack your bag, and arrive at the base camp knowing that every single person in the group is there for the exact same reason: to explore thoughtfully and connect without pretense.
-              </p>
+          <div className="p-6 rounded-2xl bg-[#D8C3A5]/30 border border-[#A8BFA3] space-y-3">
+            <div className="p-2.5 rounded-xl bg-[#183A2A] text-[#D8C3A5] w-fit">
+              <Heart className="w-5 h-5" />
             </div>
-
-            <div className="pt-3 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[#0A0A0A] font-mono">
-              <span className="font-bold">— {FOUNDER_DATA.name}, Founder</span>
-              <span className="text-[#888888]">•</span>
-              <a 
-                href="https://instagram.com/dharsh_here__"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-[#0A0A0A] hover:underline font-semibold"
-              >
-                <Instagram className="w-4 h-4 text-[#1C4D35]" />
-                <span>@dharsh_here__</span>
-              </a>
-            </div>
-
-            <div className="pt-2">
-              <a
-                href="https://instagram.com/dharsh_here__"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 min-h-[46px] px-6 py-2.5 bg-[#0A0A0A] text-white text-xs sm:text-sm font-bold uppercase tracking-wider hover:bg-[#262626] transition-colors"
-              >
-                <span>MESSAGE FOUNDER ON INSTAGRAM</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
+            <h3 className="font-serif font-bold text-base text-[#183A2A]">Zero Commercial Hype</h3>
+            <p className="text-xs text-[#202622]/80 leading-relaxed">
+              Real campfires, acoustic guitar sessions, local South Indian meals, and unhurried mornings.
+            </p>
           </div>
         </div>
 
-        {/* Principles */}
-        <div className="space-y-8 pt-6">
-          <div className="space-y-2">
-            <div className="text-xs sm:text-sm font-mono uppercase tracking-[0.2em] text-[#666666] font-semibold">
-              ETHOS
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-serif-editorial text-[#0A0A0A]">
-              Our Five Guiding Principles
-            </h2>
+        {/* Contact Strip */}
+        <div className="p-8 rounded-3xl bg-[#183A2A] text-[#F7F5EF] space-y-4 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="space-y-1">
+            <h3 className="font-serif font-bold text-lg text-[#F7F5EF]">
+              Have a question or custom cohort request?
+            </h3>
+            <p className="text-xs text-[#F7F5EF]/80 font-mono">
+              Base: Chennai, Tamil Nadu • hello@beyondstrangers.in
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-            {[
-              {
-                num: '01',
-                title: 'Curated Itineraries',
-                desc: 'Handpicked family estates, tea plantations, and ridge routes rather than commercial tourist traps.'
-              },
-              {
-                num: '02',
-                title: 'Strictly 10–12 Guests',
-                desc: 'Intimacy is non-negotiable. Small cohorts guarantee genuine conversations and quick cohesion.'
-              },
-              {
-                num: '03',
-                title: 'Solo-Traveler First',
-                desc: 'Zero single supplements, verified room matching, and a culture where solo attendees are the norm.'
-              },
-              {
-                num: '04',
-                title: 'Local Stewardship',
-                desc: 'We support independent homestays, native guides, and rural communities directly.'
-              },
-              {
-                num: '05',
-                title: 'Pacing Over Rush',
-                desc: 'We prioritize slow mornings with mountain views over frantic 6-destination checklists.'
-              }
-            ].map((item, idx) => (
-              <div key={idx} className="p-6 bg-white border border-[#E5E5E5] space-y-3 shadow-xs">
-                <div className="font-mono text-xs sm:text-sm text-[#666666] font-bold">{item.num}</div>
-                <h3 className="text-lg sm:text-xl font-bold font-serif-editorial text-[#0A0A0A]">{item.title}</h3>
-                <p className="text-xs sm:text-sm text-[#555555] font-light leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
+          <a
+            href="mailto:hello@beyondstrangers.in"
+            className="btn-primary text-xs py-3 px-6 shrink-0"
+          >
+            CONTACT OUR TEAM
+          </a>
         </div>
 
       </div>

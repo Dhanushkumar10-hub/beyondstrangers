@@ -212,10 +212,10 @@ INSERT INTO public.trips (
     16,
     11,
     'An intimate rainforest expedition crossing serene reservoir waters, secluded waterfall pools, and starlit campfire circles with fellow solo explorers.',
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80',
-    'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    'assets/images/destinations/kodaikanal.jpg',
+    'assets/videos/hero_loop.mp4',
+    'assets/images/experiences/forest_trails.jpg',
+    'assets/images/experiences/evening_campfire.jpg',
     'Regional topographical map for Gavi and Thekkady, Western Ghats',
     9.432000, -- ADMIN-ONLY STORAGE
     77.164000, -- ADMIN-ONLY STORAGE

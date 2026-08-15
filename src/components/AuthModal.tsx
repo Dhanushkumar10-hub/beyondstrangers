@@ -20,7 +20,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ initialMode, onClose, onLo
   const mockUser: TravelerProfile = {
     id: 'user-dhanush',
     name: name || 'Dhanush Kumar',
-    avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80',
+    avatar: 'assets/images/stories/avatar_dharsh.jpg',
     city: city || 'Bengaluru',
     occupation: 'Travel Enthusiast',
     bio: 'Passionate solo backpacker exploring group journeys with The Stranger Society.',
